@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 حصن المسلم - الأذكار اليومية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #4f9cf7;
+    --primary-dark: #1d4ed8;
+    --secondary: #0ea5e9;
+    --accent: #ffbf00;
+    --success: #10b981;
+    --warning: #fdcd30;
+    --error: #ef4444;
+    --light: #f8fafc;
+    --dark: #1e293b;
+    --gray: #76839c;
+    --gray-light: #f1f5f9;
+    --gray-border: #e2e8f0;
+    --white: #fff;
+    --shadow: 0 1px 3px 0 rgba(0,0,0,.08), 0 1.5px 2px 0 rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 10px -3px rgba(0, 0, 0, 0.13), 0 2px 4px -1px rgba(0,0,0,0.05);
+    --shadow-lg: 0 12px 24px -7px rgba(0,0,0,0.13), 0 8px 12px -2px rgba(0,0,0,0.09);
+    --radius: 18px;
+    --radius-sm: 10px;
+    --transition: all .32s cubic-bezier(.39,.58,.57,1);
+    --sidebar-blue-gradient: linear-gradient(166deg, #2189ff 0%, #002658 100%);
+    --sidebar-gradient2: linear-gradient(180deg, #FFEDB8 0, #fffbe2 100%);
+  }
+  * {margin:0; padding:0; box-sizing:border-box;}
+
+  body {
+    font-family: 'Tajawal', 'Amiri', sans-serif;
+    background: linear-gradient(140deg, #e0f0fe 0%, #f9fafc 100%);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  .app-container {
+    display: flex;
+    min-height: 100vh;
+    background: transparent;
+  }
+
+  .sidebar {
+    width: 290px;
+    background: var(--sidebar-blue-gradient);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    position: fixed;
+    height: 100vh;
+    left: auto;
+    right: 0;
+    z-index: 102;
+    overflow-y: auto;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    transition: var(--transition);
+    border-left: 3px solid var(--primary-light);
+  }
+  .sidebar-header {
+    padding: 32px 20px 18px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+  }
+  .sidebar-header h1 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-weight: 800;
+    letter-spacing:1.5px;
+    color: #ffd75a;
+    text-shadow:0 2px 8px rgba(39,73,150,.30);
+  }
+  .sidebar-header p {
+    font-size: 1em;
+    opacity: 0.92;
+    font-weight:400;
+    color: #e3e8fd;
+    padding-top: 1px;
+  }
+  .search-container {
+    padding: 25px 22px 12px 20px;
+    position: relative;
+  }
+  .search-box {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    border-radius: 100px;
+    border: none;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--white);
+    transition: var(--transition);
+    box-shadow: 0 1px 2px 0 rgba(27, 85, 145, 0.09);
+    border: 1.2px solid rgba(255,255,255,0.23);
+    font-weight: 400;
+  }
+  .search-box::placeholder { color: #d4deffbe; font-size:1em;}
+  .search-box:focus {
+    outline: none;
+    background: rgba(255,255,255,.28);
+    border-color: #ffd55a;
+    color: #262d52;
+  }
+  .search-icon {
+    position: absolute;
+    left: 30px;
+    top: 60%;
+    transform: translateY(-50%);
+    color: #efb714;
+    font-size: 1.3em;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .menu-items {
+    flex: 1;
+    padding: 0 15px 18px 16px;
+    margin-top: 4px;
+    overflow-y: auto;
+  }
+  .menu-item {
+    background: linear-gradient(90deg, rgba(255,255,255,0.13) 0, rgba(255,255,255,0.10) 100%);
+    border: none;
+    color: var(--white);
+    font-size: 1.1em;
+    width: 100%;
+    text-align: right;
+    padding: 14px 20px 14px 16px;
+    margin: 6.5px 0;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.06);
+    font-weight: 700;
+    box-shadow: 0 2px 8px 0 rgba(39,73,150,.04);
+    letter-spacing:.3px;
+  }
+  .menu-item:hover, .menu-item.active {
+    background: linear-gradient(90deg, #fffde7 0, #f5fdff 80%);
+    color: #17428e;
+    border-color: #ffd85c;
+    box-shadow: 0 2px 18px 0 rgba(255,223,89,0.08);
+    transform: scale(1.03) translateX(-2px);
+  }
+  .menu-item.active {
+    font-weight: 900;
+    color: var(--primary);
+    background: linear-gradient(90deg, #f2f9ff 0, #fffde7 100%);
+  }
+  .menu-item .item-icon {
+    font-size: 1.08em;
+    opacity: 1;
+    margin-right: 14px;
+  }
+  
+  /* Nouveau menu à gauche */
+  .new-leftmenu {
+    width: 75px;
+    background: linear-gradient(162deg, #fbe89f 5%, #fff 90%);
+    box-shadow: var(--shadow-lg);
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 42px;
+    padding-bottom: 24px;
+    gap: 32px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 103;
+    border-right: 2.5px dashed #ffe397;
+    transition: var(--transition);
+  }
+  .new-leftmenu .nav-circle {
+    background: linear-gradient(135deg, #ffe687, #fff8d1 60%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    box-shadow: 0 2px 18px 0 rgba(251, 224, 61,.09);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border: 2px solid #ffeca1;
+    transition: all 0.20s;
+    position: relative;
+    overflow: visible;
+  }
+  .new-leftmenu .nav-circle.active, .new-leftmenu .nav-circle:hover {
+    border-color: #ffd55a;
+    background: linear-gradient(135deg, #fff2b5, #ffe687 75%);
+    box-shadow: 0 4.5px 18px 0 #ffeeba85;
+    transform: scale(1.11) rotate(-2deg);
+  }
+  .new-leftmenu .nav-circle i {
+    font-size: 2em;
+    color: #856d18;
+    opacity: 0.87;
+    transition: color .15s;
+  }
+  .new-leftmenu .nav-label {
+    margin-top: 5.5px;
+    font-size: .89em;
+    color: #aa9732;
+    text-align: center;
+    font-family: inherit;
+    font-weight: 600;
+    opacity: 0.86;
+    direction: ltr;
+    word-break: keep-all;
+    line-height: 1.17;
+    letter-spacing: 0.4px;
+    padding-bottom: 1px;
+  }
+  .new-leftmenu .nav-badge {
+    position: absolute;
+    top: 7px; left: 8px;
+    background: #f59e0b;
+    color: #fff;
+    border-radius: 99px;
+    padding: 1px 7px 1.5px 7px;
+    font-size: 0.89em;
+    font-family: inherit;
+    font-weight: 700;
+    pointer-events: none;
+  }
+
+  .sidebar-footer {
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,.08);
+    background: transparent;
+    font-size: 0.89em;
+    opacity: .82;
+    color: #e8e8e9;
+    font-weight: 400;
+  }
+
+  .main-content {
+    flex: 1;
+    margin-right: 290px;
+    margin-left: 75px;
+    min-height: 100vh;
+    background: var(--gray-light);
+    transition: var(--transition);
+  }
+  .top-header {
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+    padding: 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    border-bottom: 1px solid var(--gray-border);
+    border-radius: 0 0 17px 17px;
+    margin-bottom: 7px;
+  }
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .menu-toggle {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 1.8em;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    display: none;
+  }
+  .menu-toggle:hover { background: var(--gray-light);}
+  .page-title {
+    font-size: 1.45em;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: .8px;
+    margin-bottom: 3px;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7.5px 15px;
+    border-radius: 24px;
+    font-size: 0.93em;
+    font-weight: 600;
+    letter-spacing: .15px;
+    box-shadow: 0 1.5px 8px 0 rgba(18,58,127,.05);
+  }
+  .status-online {
+    background: var(--success); color: var(--white);
+  }
+  .status-offline {
+    background: var(--warning); color: var(--white);
+  }
+  .status-dot { font-size: 0.95em;}
+
+  .content-area { padding: 34px 32px 32px 32px; max-width: 1200px;}
+  .welcome-card {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: 48px 42px 42px 42px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1.1px solid #e1e1ee50;
+    transition: var(--transition);
+  }
+  .welcome-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 100%; height: 4px;
+    background: linear-gradient(to left, var(--accent), var(--secondary));
+  }
+  .welcome-card h1 { font-size: 2.18em; margin-bottom: 12px; font-weight: 800; letter-spacing: 1px;}
+  .welcome-card p {font-size: 1.11em; opacity: 0.9; max-width: 720px; margin: 0 auto; line-height: 1.7;}
+
+  .content-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 32px 26px;
+    margin-bottom: 27px;
+    border: 1.6px solid var(--gray-border);
+    transition: var(--transition);
+  }
+  .content-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px);}
+  .content-header {
+    margin-bottom: 27px;
+    padding-bottom: 21px;
+    border-bottom: 2px solid var(--gray-light);
+  }
+  .content-header h2 {
+    color: var(--primary);
+    font-size: 1.5em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-weight: 800;
+    letter-spacing: .7px;
+  }
+  .content-header p {color: var(--gray); font-size: 1.10em; line-height:1.5; font-weight: 400;}
+
+  .dua-section {margin-bottom: 32px;}
+  .dua-section:last-child {margin-bottom: 0;}
+  .dua-item {
+    background: var(--gray-light);
+    border-radius: var(--radius-sm);
+    padding: 28px 22px;
+    margin-bottom: 17px;
+    border-right: 5px solid var(--primary-light);
+    transition: var(--transition);
+    box-shadow: 0 2.5px 10px 0 rgba(46,111,251,.02);
+    position: relative;
+  }
+  .dua-item:hover {
+    background: #fafffc;
+    transform: scale(1.027) translateX(-4px);
+    border-right: 5.5px solid #ffed96;
+  }
+  .arabic-text {
+    font-family: 'Amiri', serif;
+    font-size: 1.48em;
+    line-height: 1.87;
+    margin-bottom: 16px;
+    text-align: justify;
+    color: var(--dark);
+    font-weight: 500;
+    text-shadow: 0 0 1.8px #e3eafe3c;
+  }
+  .translation {
+    font-size: 1.13em;
+    line-height: 1.61;
+    color: var(--gray);
+    margin-bottom: 16px;
+    padding: 13px 18px;
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--primary-light);
+    box-shadow: var(--shadow);
+  }
+  .dua-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 11px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .repeat-badge {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary-light) 83%);
+    color: var(--white);
+    padding: 8px 18px 8px 14px;
+    border-radius: 99px;
+    font-size: 1em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: var(--shadow);
+    letter-spacing:.2px;
+  }
+  .audio-btn {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    border: none;
+    color: var(--white);
+    border-radius: 50%;
+    width: 47px; height: 47px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .audio-btn:hover, .audio-btn.playing {
+    transform: scale(1.13);
+    box-shadow: 0 2px 18px 0 #ffeeba74, var(--shadow-lg);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--warning) 96%);
+  }
+  .audio-btn::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.17) 0%, transparent 100%);
+    opacity: 0; transition: var(--transition);
+  }
+  .audio-btn:hover::before {opacity: .11;}
+  .audio-btn.playing {
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.60);}
+    70%{ box-shadow: 0 0 0 15px rgba(245,158,11,0);}
+    100%{ box-shadow: 0 0 0 0 rgba(245,158,11,0);}
+  }
+  .empty-state {
+    text-align: center;
+    padding: 63px 20px;
+    color: var(--gray);
+    border-radius: var(--radius);
+    background: linear-gradient(124deg,#fff 0%,#f7faff 100%);
+    border: .4px solid #f9f2d6;
+    box-shadow: 0 2.5px 13px 0 rgba(200,190,41,0.04);
+  }
+  .empty-state .icon {
+    font-size: 4.3em;
+    margin-bottom: 18px;
+    opacity: 0.38;
+  }
+  .empty-state h3 {font-size:1.56em;margin-bottom:10px;color:var(--dark);}
+  .empty-state p {font-size:1.08em;line-height:1.63; max-width: 440px; margin:0 auto;}
+  .offline-notice {
+    background: linear-gradient(135deg, var(--warning) 0%, var(--accent) 100%);
+    color: var(--white); padding: 16px 24px;
+    border-radius: var(--radius); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: var(--shadow-md); animation: slideIn 0.5s ease;
+    font-size: 1.08em; font-weight: 600;
+  }
+  @keyframes slideIn {
+    from {transform: translateY(-20px);opacity:0;}
+    to {transform: translateY(0);opacity:1;}
+  }
+
+  /* -- Responsive Design -- */
+  @media (max-width: 1280px) {
+    .main-content {margin-right: 255px; margin-left: 68px;}
+    .sidebar {width: 255px;}
+    .new-leftmenu {width: 60px;}
+  }
+  @media (max-width:1024px){
+    .sidebar{width:195px;}
+    .main-content{margin-right:195px; margin-left:52px;}
+    .new-leftmenu{width:44px;}
+    .sidebar-header h1 {font-size:1.15em;}
+    .welcome-card {padding:26px 8px;}
+  }
+  @media (max-width:768px){
+    .app-container{flex-direction:column;}
+    .sidebar{
+      position:fixed;top:0;right:0;width:calc(100% - 61px);
+      height:100%;z-index:1001;transform:translateX(100%);
+      transition:var(--transition); border-radius:0 0 18px 18px;
+    }
+    .sidebar.active{transform:translateX(0);}
+    .main-content{margin-right:0;margin-left:47px;width:100%;}
+    .menu-toggle{display:flex;}
+    .welcome-card {padding: 26px 5vw;}
+    .content-card{padding:20px;}
+    .header-content{padding: 0 12px;}
+    .top-header{padding:0;}
+    .new-leftmenu{width:47px;}
+  }
+  @media (max-width:480px){
+    .content-area{padding:8px;}
+    .welcome-card{padding:18px 2vw;}
+    .content-card{padding:10px;}
+    .arabic-text{font-size:1.06em;}
+    .translation{font-size:0.96em; padding:7px 11px;}
+    .header-content{height:56px;}
+    .page-title{font-size:1.06em;}
+    .main-content{margin-left: 30.5px;}
+    .sidebar {width: 96vw;}
+    .new-leftmenu {width: 31px; padding-top:16px; padding-bottom:12px;}
+    .new-leftmenu .nav-circle {width:30px; height:30px;}
+    .new-leftmenu .nav-label {font-size:.7em;}
+  }
+  /* Scrollbars */
+  ::-webkit-scrollbar{width:5px;}
+  ::-webkit-scrollbar-track{background:rgba(255,255,255,.09);border-radius:3px;}
+  ::-webkit-scrollbar-thumb{background:rgba(112,112,112,0.21);border-radius:3px;}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(70,88,205,0.11);}
+  .main-content::-webkit-scrollbar-track{background:var(--gray-light);}
+  .main-content::-webkit-scrollbar-thumb{background:var(--gray);}
+  .main-content::-webkit-scrollbar-thumb:hover{background:var(--dark);}
+  /* Simple animation */
+  .loading {
+    display:inline-block;width:18px; height:18px;
+    border:3px solid rgba(255,255,255,0.25);
+    border-radius:50%;
+    border-top-color:#ffd75a;
+    animation: spin 1s ease-in-out infinite;
+  }
+  @keyframes spin { to{ transform:rotate(360deg);} }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Nouveau joli menu vertical à gauche -->
+  <nav class="new-leftmenu" id="leftNavMenu">
+    <div class="nav-circle active" data-label="الرئيسية" onclick="showMainMenu(this)">
+      <i class='bx bx-home-smile'></i>
+      <span class="nav-badge" style="display:none;">1</span>
+    </div>
+    <div class="nav-label" style="margin-bottom:0.9em;">الرئيسية</div>
+    <div class="nav-circle" data-label="المفضلة" onclick="showFavorites(this)">
+      <i class='bx bx-star'></i>
+      <span class="nav-badge" id="favBadge" style="display:none;">0</span>
+    </div>
+    <div class="nav-label">المفضلة</div>
+    <div class="nav-circle" data-label="حول" onclick="showAbout(this)">
+      <i class='bx bx-info-circle'></i>
+    </div>
+    <div class="nav-label">حول</div>
+  </nav>
+  <!-- Menu latéral (sidebar principale) -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>📖 حصن المسلم</h1>
+      <p>الأذكار اليومية من الكتاب والسنة</p>
+    </div>
+    <div class="search-container">
+      <span class="search-icon"><i class='bx bx-search'></i></span>
+      <input type="text" class="search-box" id="searchBox" placeholder="ابحث في الأذكار...">
+    </div>
+    <div class="menu-items" id="list"></div>
+    <div class="sidebar-footer">
+      <p>جميع الحقوق محفوظة © حصن المسلم</p>
+    </div>
+  </aside>
+  <!-- Contenu principal -->
+  <div class="main-content">
+    <header class="top-header">
+      <div class="header-content">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle">
+            <i class='bx bx-menu'></i>
+          </button>
+          <div class="page-title" id="pageTitle">
+            <i class='bx bx-home'></i>
+            حصن المسلم
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="status-indicator status-online" id="statusIndicator">
+            <span class="status-dot">●</span>
+            <span class="status-text">متصل بالإنترنت</span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="content-area" id="contentArea">
+      <div class="welcome-card" id="welcomeCard">
+        <h1>مرحباً بك في حصن المسلم</h1>
+        <p>تطبيق الأذكار اليومية من الكتاب والسنة النبوية. اختر من القائمة الجانبية لبدء التلاوة والاستماع</p>
+      </div>
+      <div id="offlineNotice" style="display: none;" class="offline-notice">
+        <i class='bx bx-wifi-off'></i>
+        <span>أنت غير متصل بالإنترنت. يتم عرض المحتوى المخزن محلياً.</span>
+      </div>
+      <div class="content-card" id="contentBody" style="display: none;">
+        <!-- سيتم ملء المحتوى هنا ديناميكياً -->
+      </div>
+      <div class="content-card empty-state" id="emptyState">
+        <div class="icon">📖</div>
+        <h3>ابدأ رحلتك مع الأذكار</h3>
+        <p>اختر ذكراً من القائمة الجانبية لبدء التلاوة والاستماع إلى التلاوات</p>
+      </div>
+      <!-- Espace pour les favoris -->
+      <div class="content-card empty-state" id="favoritesState" style="display:none;">
+        <div class="icon"><i class='bx bx-star'></i></div>
+        <h3>المفضلة</h3>
+        <p>المفضلة فارغة. اضف بعض الأذكار من خلال الضغط على زر النجمة ⭐ داخل كل ذكر.</p>
+        <div id="favList"></div>
+      </div>
+      <!-- Espace pour "about" -->
+      <div class="content-card empty-state" id="aboutState" style="display:none;">
+        <div class="icon"><i class='bx bx-info-circle'></i></div>
+        <h3>حول التطبيق</h3>
+        <p>تطبيق حصن المسلم للأذكار اليومية، مجاني بالكامل، حديث وأنيق، يعمل دون انترنت.<br>© جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Service Worker Registration - Désactivé pour GitHub Pages
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', function() {
+//     navigator.serviceWorker.register('./sw.js')
+//       .then(function(registration) {
+//         console.log('ServiceWorker registration successful');
+//       })
+//       .catch(function(error) {
+//         console.log('ServiceWorker registration failed: ', error);
+//       });
+//   });
+// }
+
+const listDiv = document.getElementById("list");
+const searchBox = document.getElementById("searchBox");
+const contentBody = document.getElementById("contentBody");
+const emptyState = document.getElementById("emptyState");
+const welcomeCard = document.getElementById("welcomeCard");
+const menuToggle = document.getElementById("menuToggle");
+const sidebar = document.getElementById("sidebar");
+const statusIndicator = document.getElementById("statusIndicator");
+const offlineNotice = document.getElementById("offlineNotice");
+const pageTitle = document.getElementById("pageTitle");
+const leftNavMenu = document.getElementById("leftNavMenu");
+const favoritesState = document.getElementById("favoritesState");
+const aboutState = document.getElementById("aboutState");
+const favList = document.getElementById("favList");
+const favBadge = document.getElementById("favBadge");
+const contentArea = document.getElementById("contentArea");
+
+let allItems = [];
+let currentAudio = null;
+let isOnline = navigator.onLine;
+let favorites = JSON.parse(localStorage.getItem('hisnmuslim_favorites') || "[]");
+
+// -------------------- Nouveau menu à gauche (fonctionnalité) --------------------
+
+function clearActiveNavCircles() {
+  leftNavMenu.querySelectorAll('.nav-circle').forEach(n=>{
+    n.classList.remove('active');
+  });
+}
+function hideContentStates() {
+  emptyState.style.display = 'none';
+  welcomeCard.style.display = 'none';
+  contentBody.style.display = 'none';
+  favoritesState.style.display = 'none';
+  aboutState.style.display = 'none';
+}
+function showMainMenu(elem) {
+  clearActiveNavCircles();
+  elem.classList.add('active');
+  hideContentStates();
+  emptyState.style.display = '';
+  pageTitle.innerHTML = `<i class='bx bx-home'></i>حصن المسلم`;
+  document.querySelectorAll(".menu-item").forEach(b => b.classList.remove("active"));
+}
+
+function refreshFavBadge() {
+  if (favBadge) {
+    if (favorites.length > 0) {
+      favBadge.innerText = favorites.length;
+      favBadge.style.display = '';
+    } else {
+      favBadge.style.display = 'none';
+    }
+  }
+}
+
+function showFavorites(elem) {
+  clearActiveNavCircles();
+  elem.classList.add('active');
+  hideContentStates();
+  favoritesState.style.display = '';
+  pageTitle.innerHTML = `<i class='bx bx-star'></i>المفضلة`;
+  renderFavorites();
+}
+function showAbout(elem) {
+  clearActiveNavCircles();
+  elem.classList.add('active');
+  hideContentStates();
+  aboutState.style.display = '';
+  pageTitle.innerHTML = `<i class='bx bx-info-circle'></i>حول`;
+}
+
+// Mobile menu functionality
+function toggleMenu() {
+  sidebar.classList.toggle('active');
+}
+if(menuToggle) menuToggle.addEventListener('click', toggleMenu);
+
+// ----------------- Fin menu gauche ------------------------
+
+// تحديث حالة الاتصال
+function updateOnlineStatus() {
+  isOnline = navigator.onLine;
+  if (isOnline) {
+    statusIndicator.className = 'status-indicator status-online';
+    statusIndicator.innerHTML = '<span class="status-dot">●</span><span class="status-text">متصل بالإنترنت</span>';
+    offlineNotice.style.display = 'none';
+  } else {
+    statusIndicator.className = 'status-indicator status-offline';
+    statusIndicator.innerHTML = '<span class="status-dot">●</span><span class="status-text">غير متصل</span>';
+    offlineNotice.style.display = 'flex';
+  }
+}
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
+// بيانات كاملة مخزنة محلياً
+const fullContentData = {
+  "العربية": [
+    {
+      "TITLE": "أذكار الصباح",
+      "CONTENT": {
+        "أذكار الصباح": [
+          {
+            "ARABIC_TEXT": "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "أعوذ بالله من الشيطان الرجيم",
+            "REPEAT": 1,
+            "AUDIO": "https://www.islamicfinder.org/wp-content/uploads/2020/04/001.mp3"
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم",
+            "REPEAT": 1,
+            "AUDIO": "https://www.islamicfinder.org/wp-content/uploads/2020/04/002.mp3"
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك وأنا على عهدك ووعدك ما استطعت",
+            "REPEAT": 1,
+            "AUDIO": "https://www.islamicfinder.org/wp-content/uploads/2020/04/003.mp3"
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ إِنِّي أَصْبَحْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلاَئِكَتَكَ وَجَمِيعَ خَلْقِكَ أَنَّكَ أَنْتَ اللَّهُ لاَ إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لاَ شَرِيكَ لَكَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم إني أصبحت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك أنك أنت الله لا إله إلا أنت وحدك لا شريك لك",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ مَا أَصْبَحَ بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ فَمِنْكَ وَحْدَكَ لاَ شَرِيكَ لَكَ فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك فلك الحمد ولك الشكر",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار المساء",
+      "CONTENT": {
+        "أذكار المساء": [
+          {
+            "ARABIC_TEXT": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم بك أمسينا وبك أصبحنا وبك نحيا وبك نموت وإليك النشور",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلاَئِكَتَكَ وَجَمِيعَ خَلْقِكَ أَنَّكَ أَنْتَ اللَّهُ لاَ إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لاَ شَرِيكَ لَكَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم إني أمسيت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك أنك أنت الله لا إله إلا أنت وحدك لا شريك لك",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ مَا أَمْسَى بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ فَمِنْكَ وَحْدَكَ لاَ شَرِيكَ لَكَ فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم ما أمسى بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك فلك الحمد ولك الشكر",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار النوم",
+      "CONTENT": {
+        "أذكار النوم": [
+          {
+            "ARABIC_TEXT": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "باسمك اللهم أموت وأحيا",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم قني عذابك يوم تبعث عبادك",
+            "REPEAT": 3
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ وَفَوَّضْتُ أَمْرِي إِلَيْكَ وَوَجَّهْتُ وَجْهِي إِلَيْكَ وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ رَغْبَةً وَرَهْبَةً إِلَيْكَ لاَ مَلْجَأَ وَلاَ مَنْجَا مِنْكَ إِلاَّ إِلَيْكَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم أسلمت نفسي إليك وفوضت أمري إليك ووجهت وجهي إليك وألجأت ظهري إليك رغبة ورهبة إليك لا ملجأ ولا منجا منك إلا إليك",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ إِنَّكَ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا لَكَ مَمَاتُهَا وَمَحْيَاهَا إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم إنك خلقت نفسي وأنت توفاها لك مماتها ومحياها إن أحييتها فاحفظها وإن أمتها فاغفر لها",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار الاستيقاظ",
+      "CONTENT": {
+        "أذكار الاستيقاظ": [
+          {
+            "ARABIC_TEXT": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك المصير",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ إِنِّي أَصْبَحْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلاَئِكَتَكَ وَجَمِيعَ خَلْقِكَ أَنَّكَ أَنْتَ اللَّهُ لاَ إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لاَ شَرِيكَ لَكَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم إني أصبحت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك أنك أنت الله لا إله إلا أنت وحدك لا شريك لك",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار بعد الصلاة",
+      "CONTENT": {
+        "أذكار بعد الصلاة": [
+          {
+            "ARABIC_TEXT": "أَسْتَغْفِرُ اللَّهَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "أستغفر الله",
+            "REPEAT": 3
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ أَنْتَ السَّلاَمُ وَمِنْكَ السَّلاَمُ تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالإِكْرَامِ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ لاَ مَانِعَ لِمَا أَعْطَيْتَ وَلاَ مُعْطِيَ لِمَا مَنَعْتَ وَلاَ يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم لا مانع لما أعطيت ولا معطي لما منعت ولا ينفع ذا الجد منك الجد",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار الطعام",
+      "CONTENT": {
+        "أذكار الطعام": [
+          {
+            "ARABIC_TEXT": "بِسْمِ اللَّهِ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "بسم الله",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "بِسْمِ اللَّهِ فِي أَوَّلِهِ وَآخِرِهِ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "بسم الله في أوله وآخره",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "الحمد لله الذي أطعمني هذا ورزقنيه من غير حول مني ولا قوة",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَأَطْعِمْنَا خَيْرًا مِنْهُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم بارك لنا فيه وأطعمنا خيراً منه",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار السفر",
+      "CONTENT": {
+        "أذكار السفر": [
+          {
+            "ARABIC_TEXT": "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "سبحان الذي سخر لنا هذا وما كنا له مقرنين وإنا إلى ربنا لمنقلبون",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم إنا نسألك في سفرنا هذا البر والتقوى ومن العمل ما ترضى",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم هون علينا سفرنا هذا واطو عنا بعده",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار المرض",
+      "CONTENT": {
+        "أذكار المرض": [
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ وَاشْفِ أَنْتَ الشَّافِي لاَ شِفَاءَ إِلاَّ شِفَاؤُكَ شِفَاءً لاَ يُغَادِرُ سَقَمًا",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم رب الناس أذهب البأس واشف أنت الشافي لا شفاء إلا شفاؤك شفاء لا يغادر سقماً",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "أعوذ بالله وقدرته من شر ما أجد وأحاذر",
+            "REPEAT": 7
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ عَافِنِي فِي بَدَنِي اللَّهُمَّ عَافِنِي فِي سَمْعِي اللَّهُمَّ عَافِنِي فِي بَصَرِي لاَ إِلَهَ إِلاَّ أَنْتَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم عافني في بدني اللهم عافني في سمعي اللهم عافني في بصري لا إله إلا أنت",
+            "REPEAT": 3
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار الهم والحزن",
+      "CONTENT": {
+        "أذكار الهم والحزن": [
+          {
+            "ARABIC_TEXT": "لاَ إِلَهَ إِلاَّ اللَّهُ الْعَظِيمُ الْحَلِيمُ لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ الْعَرْشِ الْعَظِيمِ لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ السَّمَاوَاتِ وَرَبُّ الأَرْضِ وَرَبُّ الْعَرْشِ الْكَرِيمِ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "لا إله إلا الله العظيم الحليم لا إله إلا الله رب العرش العظيم لا إله إلا الله رب السموات ورب الأرض ورب العرش الكريم",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ إِنِّي عَبْدُكَ ابْنُ عَبْدِكَ ابْنُ أَمَتِكَ نَاصِيَتِي بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهِ نَفْسَكَ أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي وَنُورَ صَدْرِي وَجَلاَءَ حُزْنِي وَذَهَابَ هَمِّي",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم إني عبدك ابن عبدك ابن أمتك ناصيتي بيدك ماض في حكمك عدل في قضاؤك أسألك بكل اسم هو لك سميت به نفسك أو أنزلته في كتابك أو علمته أحداً من خلقك أو استأثرت به في علم الغيب عندك أن تجعل القرآن ربيع قلبي ونور صدري وجلاء حزني وذهاب همي",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَالْعَجْزِ وَالْكَسَلِ وَالْبُخْلِ وَالْجُبْنِ وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم إني أعوذ بك من الهم والحزن والعجز والكسل والبخل والجبن وضلع الدين وغلبة الرجال",
+            "REPEAT": 1
+          }
+        ]
+      }
+    },
+    {
+      "TITLE": "أذكار الاستغفار",
+      "CONTENT": {
+        "أذكار الاستغفار": [
+          {
+            "ARABIC_TEXT": "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه",
+            "REPEAT": 3
+          },
+          {
+            "ARABIC_TEXT": "رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "رب اغفر لي وتب علي إنك أنت التواب الرحيم",
+            "REPEAT": 1
+          },
+          {
+            "ARABIC_TEXT": "اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ",
+            "LANGUAGE_ARABIC_TRANSLATED_TEXT": "اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك وأنا على عهدك ووعدك ما استطعت أعوذ بك من شر ما صنعت أبوء لك بنعمتك علي وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت",
+            "REPEAT": 1
+          }
+        ]
+      }
+    }
+  ]
+};
+
+function loadData() {
+  // تحميل البيانات من الملف المحلي أولاً (أفضل للـ GitHub Pages)
+  fetch("./data.json")
+    .then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
+    .then(data => {
+      allItems = data["العربية"];
+      renderList(allItems);
+      localStorage.setItem('hisnmuslim_data', JSON.stringify(data));
+      console.log('Data loaded from local file successfully');
+    })
+    .catch(error => {
+      console.error("Error loading data from local file:", error);
+      loadFromLocalStorage();
+    });
+}
+function loadFromLocalStorage() {
+  const localData = localStorage.getItem('hisnmuslim_data');
+  if (localData) {
+    const data = JSON.parse(localData);
+    allItems = data["العربية"];
+    renderList(allItems);
+  } else {
+    allItems = fullContentData["العربية"];
+    renderList(allItems);
+  }
+}
+
+// Liste principale
+function renderList(items){
+  listDiv.innerHTML = '';
+  if (items.length === 0) {
+    listDiv.innerHTML = '<div style="color:rgba(37,38,89,0.68); background:#ffe6870f; border-radius:9px;padding:16px;font-size:.96em;box-shadow:0 1px 10px 0 #f3e8be38; margin-top:26px;text-align:center">لا توجد نتائج للبحث</div>';
+    return;
+  }
+  items.forEach(item => {
+    const btn = document.createElement("button");
+    btn.className = "menu-item";
+    btn.innerHTML = `
+      <span>${item.TITLE}</span>
+      <span class="item-icon"><i class='bx bx-book-open'></i></span>
+    `;
+    btn.onclick = () => {
+      document.querySelectorAll(".menu-item").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      loadContent(item);
+      pageTitle.innerHTML = `<i class='bx bx-book-open'></i>${item.TITLE}`;
+      if (window.innerWidth <= 768) {
+        toggleMenu();
+      }
+      clearActiveNavCircles();
+    };
+    listDiv.appendChild(btn);
+  });
+}
+
+searchBox.addEventListener("input", e => {
+  const val = e.target.value.trim();
+  if(!val) renderList(allItems);
+  else {
+    const filtered = allItems.filter(i => i.TITLE.includes(val));
+    renderList(filtered);
+  }
+});
+
+function loadContent(item) {
+  hideContentStates();
+  contentBody.style.display = 'block';
+  if (item.CONTENT) {
+    displayContent(item.CONTENT, item.TITLE);
+  } else {
+    // محاولة تحميل المحتوى من الملف المحلي أولاً
+    loadContentFromLocal(item.TITLE);
+  }
+}
+function loadContentFromLocal(title) {
+  const localContent = localStorage.getItem(`hisnmuslim_${title}`);
+  if (localContent) {
+    const data = JSON.parse(localContent);
+    displayContent(data, title);
+  } else {
+    const embeddedItem = fullContentData["العربية"].find(item => item.TITLE === title);
+    if (embeddedItem && embeddedItem.CONTENT) {
+      displayContent(embeddedItem.CONTENT, title);
+    } else {
+      displayFallbackContent(title);
+    }
+  }
+}
+function saveContentLocally(title, content) {
+  localStorage.setItem(`hisnmuslim_${title}`, JSON.stringify(content));
+}
+function displayFallbackContent(title) {
+  const fallbackContent = {
+    [title]: [
+      {
+        "ARABIC_TEXT": "لا يتوفر محتوى لهذا الذكر حالياً",
+        "LANGUAGE_ARABIC_TRANSLATED_TEXT": "يرجى الاتصال بالإنترنت لتحميل المحتوى",
+        "REPEAT": 1
+      }
+    ]
+  };
+  displayContent(fallbackContent, title);
+}
+// ------- Favoris - ajouter/supprimer/unicité : id ou texte ------
+function itemToFavoriteKey(item, entry) {
+  // Key unique: titre + texte arabe
+  return (item.TITLE || '') + '|' + (entry.ARABIC_TEXT||'');
+}
+function isEntryFav(item, entry) {
+  const key = itemToFavoriteKey(item, entry);
+  return favorites.some(fav => fav.key === key);
+}
+function addToFavorites(item, entry) {
+  const key = itemToFavoriteKey(item, entry);
+  if (isEntryFav(item, entry)) return;
+  favorites.push({
+    key,
+    itemTitle: item.TITLE,
+    ARABIC_TEXT: entry.ARABIC_TEXT,
+    TRANSLATION: entry.LANGUAGE_ARABIC_TRANSLATED_TEXT,
+    REPEAT: entry.REPEAT,
+    AUDIO: entry.AUDIO
+  });
+  localStorage.setItem('hisnmuslim_favorites', JSON.stringify(favorites));
+  refreshFavBadge();
+}
+function removeFromFavorites(item, entry) {
+  const key = itemToFavoriteKey(item, entry);
+  favorites = favorites.filter(fav => fav.key !== key);
+  localStorage.setItem('hisnmuslim_favorites', JSON.stringify(favorites));
+  refreshFavBadge();
+}
+
+// Affiche les favoris sur la page "المفضلة"
+function renderFavorites() {
+  if (!favList) return;
+  favList.innerHTML = '';
+  if (!favorites || favorites.length === 0) {
+    favList.innerHTML = "<div style='margin-top:19px;color:#ab973d;'>لم يتم إضافة أذكار بعد إلى المفضلة.</div>";
+    return;
+  }
+  let html = `<div style="margin-top:18px;">`;
+  favorites.forEach((fav, ix) => {
+    html += `
+      <div class="dua-item" style="background:#fffdf2;">
+        <div class="arabic-text">${fav.ARABIC_TEXT||""}</div>
+        ${fav.TRANSLATION?`<div class="translation">${fav.TRANSLATION}</div>`:""}
+        <div class="dua-meta">
+          <div class="repeat-badge"><i class='bx bx-repeat'></i> تكرر ${fav.REPEAT||1} ${fav.REPEAT&&fav.REPEAT>1?"مرات":"مرة"}</div>
+          ${fav.AUDIO?`
+            <button class="audio-btn" onclick="playAudio('${fav.AUDIO}', this)">
+              <i class='bx bx-play'></i>
+            </button>
+          `:""}
+          <button style="background:none;color:#feb02f;padding:0 18px 0 0;border:none;box-shadow:none;font-size:1.08em;cursor:pointer;" title="حذف من المفضلة" onclick="removeFavoriteByKey('${fav.key}');showFavorites(document.querySelectorAll('.new-leftmenu .nav-circle')[1]);event.stopPropagation();">
+            <i class='bx bx-star'></i><i class='bx bx-x'></i>
+          </button>
+        </div>
+      </div>
+    `;
+  });
+  html += "</div>";
+  favList.innerHTML = html;
+}
+
+window.removeFavoriteByKey = function(key) {
+  favorites = favorites.filter(fav => fav.key !== key);
+  localStorage.setItem('hisnmuslim_favorites', JSON.stringify(favorites));
+  refreshFavBadge();
+  renderFavorites();
+};
+
+// --------- Affichage des dou'a + gestion favoris --------------
+function displayContent(data, title) {
+  const rootKey = Object.keys(data)[0];
+  const entries = data[rootKey];
+
+  // Trouver l'objet item
+  let itemObj = allItems.find(it => it.TITLE===title) || {TITLE: title};
+
+  let html = `
+    <div class="content-header">
+      <h2><i class='bx bx-bookmark'></i>${rootKey}</h2>
+      <p>الأذكار المباركة من السنة النبوية</p>
+    </div>
+    <div class="dua-section">
+  `;
+
+  entries.forEach(entry => {
+    const favActive = isEntryFav(itemObj, entry) ? "active" : "";
+    html += `
+      <div class="dua-item">
+        <div class="arabic-text">${entry.ARABIC_TEXT || ""}</div>
+        ${entry.LANGUAGE_ARABIC_TRANSLATED_TEXT?`<div class="translation">${entry.LANGUAGE_ARABIC_TRANSLATED_TEXT}</div>`:""}
+        <div class="dua-meta" style="gap:0.7em;">
+          <div>
+            ${(entry.REPEAT && entry.REPEAT > 1)
+            ? `<div class="repeat-badge"><i class='bx bx-repeat'></i> تكرر ${entry.REPEAT} مرات</div>`
+            : `<div style="min-width:70px;"></div>`}
+          </div>
+          ${entry.AUDIO?`
+            <button class="audio-btn" onclick="playAudio('${entry.AUDIO}', this)">
+              <i class='bx bx-play'></i>
+            </button>
+          `:""}
+          <button style="background:none;color:#feb02f;padding:0 6px 0 0;border:none;box-shadow:none;font-size:1.23em;cursor:pointer;"
+            class="fav-btn ${favActive}" title="${favActive?"إزالة من المفضلة":"إضافة إلى المفضلة"}"
+            onclick="toggleFavUI(event, '${encodeURIComponent(JSON.stringify(itemObj))}', '${encodeURIComponent(JSON.stringify(entry))}')">
+            <i class='bx ${favActive?"bxs-star":"bx-star"}'></i>
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  contentBody.innerHTML = html;
+  contentBody.scrollTo({top:0, behavior:"smooth"});
+}
+// ------- Gestion fav button UI (par item et entree)
+window.toggleFavUI = function(event, itemStr, entryStr) {
+  event.stopPropagation();
+  let item = JSON.parse(decodeURIComponent(itemStr));
+  let entry = JSON.parse(decodeURIComponent(entryStr));
+  if (isEntryFav(item, entry)) {
+    removeFromFavorites(item, entry);
+    event.currentTarget.classList.remove("active");
+    event.currentTarget.innerHTML = "<i class='bx bx-star'></i>";
+  } else {
+    addToFavorites(item, entry);
+    event.currentTarget.classList.add("active");
+    event.currentTarget.innerHTML = "<i class='bx bxs-star'></i>";
+  }
+  refreshFavBadge();
+};
+// --------- Audio controls ---------
+window.playAudio = function(url, button) {
+  if (currentAudio && currentAudio.src === url && !currentAudio.paused) {
+    currentAudio.pause();
+    button.classList.remove('playing');
+    button.innerHTML = '<i class="bx bx-play"></i>';
+    return;
+  }
+  if (currentAudio && currentAudio.src !== url) {
+    currentAudio.pause();
+    document.querySelectorAll('.audio-btn').forEach(btn => {
+      btn.classList.remove('playing');
+      btn.innerHTML = '<i class="bx bx-play"></i>';
+    });
+  }
+  if (currentAudio && currentAudio.src === url && currentAudio.paused) {
+    currentAudio.play();
+    button.classList.add('playing');
+    button.innerHTML = '<i class="bx bx-pause"></i>';
+    return;
+  }
+  currentAudio = new Audio(url);
+  currentAudio.play();
+
+  button.classList.add('playing');
+  button.innerHTML = '<i class="bx bx-pause"></i>';
+
+  currentAudio.onended = function() {
+    button.classList.remove('playing');
+    button.innerHTML = '<i class="bx bx-play"></i>';
+    currentAudio = null;
+  };
+  currentAudio.onerror = function() {
+    button.classList.remove('playing');
+    button.innerHTML = '<i class="bx bx-play"></i>';
+    currentAudio = null;
+    if (isOnline) {
+      alert('حدث خطأ في تشغيل الصوت. يرجى المحاولة مرة أخرى.');
+    } else {
+      alert('لا يمكن تشغيل الصوت بدون اتصال بالإنترنت.');
+    }
+  };
+};
+
+// ---- Initialisation à DOM ready -----
+document.addEventListener('DOMContentLoaded', function() {
+  updateOnlineStatus();
+  loadData();
+  refreshFavBadge();
+  // Quand pression sur menu à gauche : afficher la section correcte!
+  document.querySelectorAll('.new-leftmenu .nav-circle').forEach(node => {
+    node.addEventListener('click', function(){
+      if(this.dataset.label==="الرئيسية") showMainMenu(this);
+      if(this.dataset.label==="المفضلة") showFavorites(this);
+      if(this.dataset.label==="حول") showAbout(this);
+    });
+  });
+});
+</script>
+
+</body>
+</html>
