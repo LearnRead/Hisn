@@ -841,29 +841,55 @@ const fullContentData = {
 function loadData() {
   // محاولة تحميل البيانات من API عبر proxy CORS
   if (isOnline) {
-    // Utiliser un proxy CORS pour GitHub Pages
-    const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent("http://www.hisnmuslim.com/api/ar/husn_ar.json");
+    // Utiliser plusieurs proxies CORS comme fallback
+    const proxies = [
+      "https://api.allorigins.win/get?url=",
+      "https://cors-anywhere.herokuapp.com/",
+      "https://api.codetabs.com/v1/proxy?quest="
+    ];
     
-    fetch(proxyUrl)
-      .then(r => {
-        if (!r.ok) throw new Error('Proxy response was not ok');
-        return r.json();
-      })
-      .then(response => {
-        const data = JSON.parse(response.contents);
-        allItems = data["العربية"];
-        renderList(allItems);
-        localStorage.setItem('hisnmuslim_data', JSON.stringify(data));
-        console.log('Data loaded from API via proxy successfully');
-      })
-      .catch(error => {
-        console.error("Error loading data from API via proxy:", error);
-        // محاولة تحميل من الملف المحلي كبديل
-        loadFromLocalFile();
-      });
+    const apiUrl = "http://www.hisnmuslim.com/api/ar/husn_ar.json";
+    
+    tryProxy(proxies, apiUrl, 0);
   } else {
     loadFromLocalFile();
   }
+}
+
+function tryProxy(proxies, apiUrl, index) {
+  if (index >= proxies.length) {
+    console.log("All proxies failed, using local data");
+    loadFromLocalFile();
+    return;
+  }
+  
+  const proxyUrl = proxies[index] + encodeURIComponent(apiUrl);
+  
+  fetch(proxyUrl)
+    .then(r => {
+      if (!r.ok) throw new Error('Proxy response was not ok');
+      return r.json();
+    })
+    .then(response => {
+      // Different proxies return different formats
+      let data;
+      if (response.contents) {
+        data = JSON.parse(response.contents);
+      } else if (response.data) {
+        data = response.data;
+      } else {
+        data = response;
+      }
+      
+      allItems = data["العربية"];
+      renderList(allItems);
+      localStorage.setItem('hisnmuslim_data', JSON.stringify(data));
+      console.log(`Data loaded from API via proxy ${index + 1} successfully`);
+    })
+    .catch(error => {
+      console.error(`Proxy ${index + 1} failed:`, error);
+      tryProxy(proxies, apiUrl, index + 1);
+    });
 }
 
 function loadFromLocalFile() {
@@ -940,38 +966,64 @@ function loadContent(item) {
   } else {
     // محاولة تحميل المحتوى من API عبر proxy CORS
     if (isOnline && item.TEXT) {
-      const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(item.TEXT);
+      const proxies = [
+        "https://api.allorigins.win/get?url=",
+        "https://cors-anywhere.herokuapp.com/",
+        "https://api.codetabs.com/v1/proxy?quest="
+      ];
       
-      fetch(proxyUrl)
-        .then(r => {
-          if (!r.ok) throw new Error('Proxy response was not ok');
-          return r.json();
-        })
-        .then(response => {
-          const data = JSON.parse(response.contents);
-          displayContent(data, item.TITLE);
-          saveContentLocally(item.TITLE, data);
-        })
-        .catch(error => {
-          console.error("Error loading content from API via proxy:", error);
-          loadContentFromLocal(item.TITLE);
-        });
+      tryContentProxy(proxies, item.TEXT, item.TITLE, 0);
     } else {
       loadContentFromLocal(item.TITLE);
     }
   }
 }
+
+function tryContentProxy(proxies, apiUrl, title, index) {
+  if (index >= proxies.length) {
+    console.log("All content proxies failed, using local data");
+    loadContentFromLocal(title);
+    return;
+  }
+  
+  const proxyUrl = proxies[index] + encodeURIComponent(apiUrl);
+  
+  fetch(proxyUrl)
+    .then(r => {
+      if (!r.ok) throw new Error('Proxy response was not ok');
+      return r.json();
+    })
+    .then(response => {
+      // Different proxies return different formats
+      let data;
+      if (response.contents) {
+        data = JSON.parse(response.contents);
+      } else if (response.data) {
+        data = response.data;
+      } else {
+        data = response;
+      }
+      
+      displayContent(data, title);
+      saveContentLocally(title, data);
+      console.log(`Content loaded from API via proxy ${index + 1} successfully`);
+    })
+    .catch(error => {
+      console.error(`Content proxy ${index + 1} failed:`, error);
+      tryContentProxy(proxies, apiUrl, title, index + 1);
+    });
+}
 function loadContentFromLocal(title) {
-  // محاولة تحميل من localStorage أولاً
-  const localContent = localStorage.getItem(`hisnmuslim_${title}`);
-  if (localContent) {
-    const data = JSON.parse(localContent);
-    displayContent(data, title);
+  // استخدام البيانات المدمجة مباشرة
+  const embeddedItem = fullContentData["العربية"].find(item => item.TITLE === title);
+  if (embeddedItem && embeddedItem.CONTENT) {
+    displayContent(embeddedItem.CONTENT, title);
   } else {
-    // استخدام البيانات المدمجة كبديل
-    const embeddedItem = fullContentData["العربية"].find(item => item.TITLE === title);
-    if (embeddedItem && embeddedItem.CONTENT) {
-      displayContent(embeddedItem.CONTENT, title);
+    // محاولة تحميل من localStorage كبديل
+    const localContent = localStorage.getItem(`hisnmuslim_${title}`);
+    if (localContent) {
+      const data = JSON.parse(localContent);
+      displayContent(data, title);
     } else {
       displayFallbackContent(title);
     }

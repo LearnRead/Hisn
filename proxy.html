@@ -1,0 +1,43 @@
+// Proxy CORS personnalisé pour GitHub Pages
+// Créez un fichier proxy.html dans votre repo
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Proxy</title>
+</head>
+<body>
+    <h1>CORS Proxy</h1>
+    <p>Ce fichier agit comme un proxy CORS pour contourner les restrictions.</p>
+    
+    <script>
+        // Fonction pour faire des requêtes CORS
+        async function corsProxy(url) {
+            try {
+                const response = await fetch(url, {
+                    mode: 'cors',
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+                        'Access-Control-Allow-Headers': 'Content-Type'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Proxy error:', error);
+                throw error;
+            }
+        }
+        
+        // Exposer la fonction globalement
+        window.corsProxy = corsProxy;
+        
+        console.log('CORS Proxy loaded successfully');
+    </script>
+</body>
+</html>
