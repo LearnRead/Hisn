@@ -839,25 +839,21 @@ const fullContentData = {
 };
 
 function loadData() {
-  // محاولة تحميل البيانات من API عبر proxy CORS
+  // محاولة تحميل البيانات من API أولاً
   if (isOnline) {
-    // Utiliser un proxy CORS pour GitHub Pages
-    const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent("http://www.hisnmuslim.com/api/ar/husn_ar.json");
-    
-    fetch(proxyUrl)
+    fetch("http://www.hisnmuslim.com/api/ar/husn_ar.json")
       .then(r => {
-        if (!r.ok) throw new Error('Proxy response was not ok');
+        if (!r.ok) throw new Error('API response was not ok');
         return r.json();
       })
-      .then(response => {
-        const data = JSON.parse(response.contents);
+      .then(data => {
         allItems = data["العربية"];
         renderList(allItems);
         localStorage.setItem('hisnmuslim_data', JSON.stringify(data));
-        console.log('Data loaded from API via proxy successfully');
+        console.log('Data loaded from API successfully');
       })
       .catch(error => {
-        console.error("Error loading data from API via proxy:", error);
+        console.error("Error loading data from API:", error);
         // محاولة تحميل من الملف المحلي كبديل
         loadFromLocalFile();
       });
@@ -938,22 +934,19 @@ function loadContent(item) {
   if (item.CONTENT) {
     displayContent(item.CONTENT, item.TITLE);
   } else {
-    // محاولة تحميل المحتوى من API عبر proxy CORS
+    // محاولة تحميل المحتوى من API أولاً
     if (isOnline && item.TEXT) {
-      const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(item.TEXT);
-      
-      fetch(proxyUrl)
+      fetch(item.TEXT)
         .then(r => {
-          if (!r.ok) throw new Error('Proxy response was not ok');
+          if (!r.ok) throw new Error('API response was not ok');
           return r.json();
         })
-        .then(response => {
-          const data = JSON.parse(response.contents);
+        .then(data => {
           displayContent(data, item.TITLE);
           saveContentLocally(item.TITLE, data);
         })
         .catch(error => {
-          console.error("Error loading content from API via proxy:", error);
+          console.error("Error loading content from API:", error);
           loadContentFromLocal(item.TITLE);
         });
     } else {
